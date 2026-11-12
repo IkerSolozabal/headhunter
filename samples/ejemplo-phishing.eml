@@ -1,0 +1,104 @@
+Return-Path: <bounce-7731@mailer.contoso-billing.top>
+Delivered-To: victima@fabrikam.com
+Received: by 2002:a05:6a10:8c4f:b0:5e1:1234:abcd with SMTP id x15csp123456;
+        Tue, 10 Nov 2026 08:14:22 -0800 (PST)
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id a640c23a62f3a-12345;
+        Tue, 10 Nov 2026 08:14:21 -0800 (PST)
+Received: from smtp.contoso-billing.top (unknown [185.220.101.4])
+        by mail-sor-f41.google.com (Postfix) with ESMTPSA id 4F2A1C0042
+        for <victima@fabrikam.com>; Tue, 10 Nov 2026 16:14:20 +0000 (UTC)
+Received: from [192.168.1.23] (helo=WIN-8K2JD7) by smtp.contoso-billing.top
+        with esmtpa (Exim 4.96) (envelope-from <bounce-7731@mailer.contoso-billing.top>)
+        id 1tXyZ-000abc-QR; Tue, 10 Nov 2026 16:14:19 +0000
+Authentication-Results: mx.google.com;
+       dkim=fail header.i=@contoso.com header.s=s1 header.b=AbCdEf;
+       spf=softfail (google.com: domain of transitioning bounce-7731@mailer.contoso-billing.top does not designate 185.220.101.4 as permitted sender) smtp.mailfrom=bounce-7731@mailer.contoso-billing.top;
+       dmarc=fail (p=REJECT sp=REJECT dis=QUARANTINE) header.from=contoso.com
+Received-SPF: softfail (google.com: domain of transitioning bounce-7731@mailer.contoso-billing.top does not designate 185.220.101.4 as permitted sender) client-ip=185.220.101.4;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=contoso.com; s=s1;
+        h=from:to:subject:date; bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+        b=AbCdEfGhIjKlMnOpQrStUvWxYz0123456789
+X-Originating-IP: [45.33.32.156]
+X-Sender-IP: 2a03:2880:f12f:83:face:b00c:0:25de
+X-Mailer: Microsoft Outlook 16.0
+From: =?UTF-8?B?Q29udG9zbyBGYWN0dXJhY2nDs24=?= <facturacion@contoso.com>
+Reply-To: "Soporte" <soporte-contoso@gmail.com>
+Sender: notify@mailer.contoso-billing.top
+To: =?iso-8859-1?Q?V=EDctima_P=E9rez?= <victima@fabrikam.com>, otra.persona@fabrikam.com
+Cc: finanzas@fabrikam.com
+Subject: =?UTF-8?Q?=E2=9A=A0=EF=B8=8F_Factura_pendiente_n=C2=BA_2026-1188?=
+Date: Tue, 10 Nov 2026 16:14:18 +0000
+Message-ID: <CAF1x9Pz-7731.ab12@smtp.contoso-billing.top>
+List-Unsubscribe: <mailto:unsub@mailer.contoso-billing.top?subject=unsub>, <https://mailer.contoso-billing.top/u/7731>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="==MIXED=="
+
+This is a multi-part message in MIME format.
+
+--==MIXED==
+Content-Type: multipart/alternative; boundary="==ALT=="
+
+--==ALT==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Estimado cliente,
+
+Su factura n=C2=BA 2026-1188 est=C3=A1 pendiente. Desc=C3=A1rguela aqu=C3=AD:
+https://contoso-billing.top/invoice/2026-1188?id=3Dab12&utm_source=3Dmail
+
+Si tiene dudas escriba a soporte-contoso@gmail.com o visite hxxps://contoso-help[.]online/faq
+Servidor de respaldo: 103.224.182.250
+
+--==ALT==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><p>Estimado cliente,</p><p>Su factura est=C3=A1 pendiente.</p>
+<a href=3D"https://bit.ly/3xYzAbC">Ver factura</a>
+<a href=3D"https://contoso-billing.top/invoice/2026-1188?id=3Dab12&amp;utm_sour=
+ce=3Dmail">https://contoso.com/facturas</a>
+<img src=3D"http://track.contoso-billing.top/open.gif?u=3D7731" width=3D1 height=
+=3D1>
+<img src=3D"cid:logo001">
+</body></html>
+
+--==ALT==--
+
+--==MIXED==
+Content-Type: text/html; name="Factura_2026-1188.html"
+Content-Disposition: attachment; filename="Factura_2026-1188.html"
+Content-Transfer-Encoding: base64
+
+PCFkb2N0eXBlIGh0bWw+PGh0bWw+PGJvZHk+Cjxmb3JtIGFjdGlvbj0iaHR0cHM6Ly9jb250b3Nv
+LWJpbGxpbmcudG9wL2NvbGxlY3QucGhwIiBtZXRob2Q9InBvc3QiPgo8aW5wdXQgbmFtZT0idXNl
+ciI+PGlucHV0IG5hbWU9InBhc3MiIHR5cGU9InBhc3N3b3JkIj48L2Zvcm0+CjxzY3JpcHQgc3Jj
+PSJodHRwOi8vY2RuLmNvbnRvc28tYmlsbGluZy50b3AvanMvc3RlYWxlci5qcyI+PC9zY3JpcHQ+
+CjwvYm9keT48L2h0bWw+
+
+--==MIXED==
+Content-Type: application/pdf
+Content-Disposition: attachment;
+ filename*=utf-8''Condiciones%20de%20pago%20%E2%80%93%202026.pdf
+Content-Transfer-Encoding: base64
+
+JVBERi0xLjQKJSBmYWtlIHBkZiBmb3IgZGVtbwoxIDAgb2JqIDw8IC9VUkkgKGh0dHBzOi8vZmls
+ZXMuY29udG9zby1zaGFyZS5uZXQvZC85ZjhlN2QpID4+IGVuZG9iagolJUVPRgo=
+
+--==MIXED==
+Content-Type: message/rfc822
+Content-Disposition: attachment; filename="reenviado.eml"
+
+Received: from relay.oldmail.contoso.co.uk (relay.oldmail.contoso.co.uk [51.140.12.34])
+	by mx.contoso.co.uk with ESMTP id 77aa; Mon, 9 Nov 2026 10:00:00 +0000
+From: "IT Helpdesk" <helpdesk@contoso.co.uk>
+To: finance@fabrikam.com
+Subject: Reenviado: cambio de cuenta bancaria
+Message-ID: <nested-0001@contoso.co.uk>
+Content-Type: text/plain; charset=utf-8
+
+Por favor actualiza el IBAN en https://portal.contoso-payments.info/iban?ref=8812
+Contacto alternativo: pagos.urgentes@protonmail.com
+
+--==MIXED==--
