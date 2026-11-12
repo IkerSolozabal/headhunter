@@ -247,7 +247,7 @@ function walk(raw, result, path, depth) {
   if (isAttachment) {
     result.attachments.push(makeAttachment(filename || `parte-${path}`, type, decoded, disposition, path));
     // Si el adjunto es texto (txt, html, csv, ics...) también lo analizamos.
-    if (isText) result.texts.push({ type, content: decodeBinaryText(decoded, ct.params.charset), path, attachment: true });
+    if (isText) result.texts.push({ type, content: decodeBinaryText(decoded, ct.params.charset), path, attachment: filename || `parte-${path}` });
     return;
   }
 
