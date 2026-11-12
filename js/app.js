@@ -255,7 +255,6 @@ function subtitle(it) {
   return it.sources.length > 4 ? `${src} · +${it.sources.length - 4}` : src;
 }
 
-const flag = (cc) => (cc && /^[A-Z]{2}$/i.test(cc) ? String.fromCodePoint(...[...cc.toUpperCase()].map((c) => 0x1f1a5 + c.charCodeAt(0))) : "");
 
 function tagsHtml(it) {
   const t = [];
@@ -271,7 +270,7 @@ function tagsHtml(it) {
       const d = e.data || {};
       if (d.asn) t.push(`<span class="tag asn">${esc(d.asn)}</span>`);
       if (d.as_name) t.push(`<span class="tag org" title="${esc(d.as_domain || "")}">${esc(d.as_name)}</span>`);
-      if (d.country_code) t.push(`<span class="tag" title="${esc(d.country || "")}">${flag(d.country_code)} ${esc(d.country_code)}</span>`);
+      if (d.country_code) t.push(`<span class="tag" title="${esc(d.country || "")}">${esc(d.country_code)}</span>`);
       if (d.bogon) t.push(`<span class="tag priv">Bogon</span>`);
     }
   }
