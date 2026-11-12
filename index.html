@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>headhunter · EML IOC extractor</title>
+  <meta name="description" content="Sube un .eml y extrae al instante todos los IOC: IPs, dominios, hostnames, URLs, emails y hashes de adjuntos. Todo en tu navegador.">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%2322d3ee'/><stop offset='1' stop-color='%23a855f7'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><path d='M9 10h4v5h6v-5h4v12h-4v-4h-6v4H9z' fill='%230b0d14'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="headhunter, inicio">
+      <span class="brand-mark">H</span>
+      <span class="brand-name">head<span>hunter</span></span>
+    </a>
+    <div class="topbar-actions">
+      <span class="privacy-pill" title="El archivo se procesa en tu navegador. Solo las IPs públicas se consultan en IPinfo si configuras un token.">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+        100% local
+      </span>
+      <button class="icon-btn" id="settingsBtn" type="button" aria-label="Ajustes de IPinfo" title="Ajustes de IPinfo">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.6 7.6 0 0 0-1.7-1L15 3.5h-4L10.7 6a7.6 7.6 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.5 7.5 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.6 7.6 0 0 0 1.7 1l.3 2.5h4l.3-2.5a7.6 7.6 0 0 0 1.7-1l2.4 1 2-3.4-2-1.6zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="hero">
+      <h1>Arrastra un <span class="grad">.eml</span>.<br>Te devuelvo todos sus IOC.</h1>
+      <p class="lead">IPs, dominios, hostnames, URLs, direcciones de correo y hashes MD5 / SHA1 / SHA256 de los adjuntos. Clasificados, seleccionables y listos para pegar.</p>
+
+      <label class="dropzone" id="dropzone" for="fileInput" tabindex="0">
+        <input type="file" id="fileInput" accept=".eml,message/rfc822" hidden>
+        <div class="dz-ring"></div>
+        <div class="dz-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0-4.5 4.5M12 4l4.5 4.5M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+        </div>
+        <div class="dz-title">Suelta aquí tu archivo <code>.eml</code></div>
+        <div class="dz-sub">o haz clic para elegirlo · también puedes pegarlo con <kbd>Ctrl</kbd>+<kbd>V</kbd></div>
+      </label>
+      <div class="hero-foot">
+        <button class="ghost-btn" id="sampleBtn" type="button">Probar con un ejemplo</button>
+      </div>
+    </section>
+
+    <section class="results" id="results" hidden>
+      <div class="summary card" id="summary"></div>
+
+      <div class="toolbar card">
+        <div class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"/></svg>
+          <input type="search" id="searchInput" placeholder="Filtrar IOC…" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="chips" id="chips" role="tablist" aria-label="Categorías"></div>
+        <div class="toolbar-actions">
+          <label class="switch" title="Convierte http→hxxp y . → [.] al copiar">
+            <input type="checkbox" id="defangToggle">
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+            Defang
+          </label>
+          <label class="switch" title="Ocultar IPs privadas, reservadas y de loopback">
+            <input type="checkbox" id="publicOnlyToggle" checked>
+            <span class="switch-track"><span class="switch-thumb"></span></span>
+            Solo IPs públicas
+          </label>
+        </div>
+      </div>
+
+      <div class="groups" id="groups"></div>
+    </section>
+  </main>
+
+  <div class="selbar" id="selbar" aria-live="polite">
+    <div class="selbar-info"><strong id="selCount">0</strong> IOC seleccionados</div>
+    <div class="selbar-actions">
+      <button class="ghost-btn" id="selectAllBtn" type="button">Todo</button>
+      <button class="ghost-btn" id="selectNoneBtn" type="button">Nada</button>
+      <button class="primary-btn" id="copyBtn" type="button" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h10v10H9zM5 15V5h10"/></svg>
+        Copiar
+      </button>
+    </div>
+  </div>
+
+  <dialog class="modal" id="settingsDialog">
+    <form method="dialog" class="modal-body" id="settingsForm">
+      <h2>Enriquecimiento de IPs</h2>
+      <p>Las IPs públicas se consultan en <a href="https://ipinfo.io/" target="_blank" rel="noopener">IPinfo Lite</a> para mostrar ASN, organización y país. El token se guarda solo en este navegador.</p>
+      <label class="field">
+        <span>Token de IPinfo</span>
+        <input type="password" id="tokenInput" placeholder="p. ej. a1b2c3d4e5f6a7" autocomplete="off" spellcheck="false">
+      </label>
+      <label class="switch">
+        <input type="checkbox" id="autoEnrichToggle" checked>
+        <span class="switch-track"><span class="switch-thumb"></span></span>
+        Consultar automáticamente al analizar
+      </label>
+      <div class="modal-actions">
+        <button class="ghost-btn" value="cancel" type="submit" formnovalidate>Cancelar</button>
+        <button class="ghost-btn danger" id="clearCacheBtn" type="button">Vaciar caché</button>
+        <button class="primary-btn" value="save" type="submit">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <footer class="foot">
+    headhunter · procesado local en el navegador · <a href="https://github.com/IkerSolozabal/headhunter" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
